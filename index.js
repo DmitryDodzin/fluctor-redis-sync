@@ -11,5 +11,12 @@ const Client = require('./lib/client');
 
 module.exports = {
   METADATA,
-  Client
+  Client,
+  create: options => new Promise(
+    (resolve, reject) => {
+      let client = new Client(options);
+      client.on('ready', () => resolve(client));  
+      client.on('error', err => reject(err));  
+    }
+  )
 };
